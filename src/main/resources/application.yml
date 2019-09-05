@@ -1,0 +1,14 @@
+gateway:
+  mesh:
+    destination: https://demo.getmesh.io:443
+logging:
+  level:
+    net:
+      savantly: DEBUG
+    web: DEBUG
+graphql.playground:
+    mapping: /playground
+    endpoint: /mesh/api/v2/demo/graphql
+    subscriptionsEndpoint: /mesh/api/v2/eventbus
+    enabled: true
+    pageTitle: Gentics Mesh GraphQL Playground
