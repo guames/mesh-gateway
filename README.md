@@ -25,6 +25,7 @@ so you can customize the `./src/main/resources/application.yml`. It points to th
 
 The the 'local' Spring profile is active by default, so you can override properties by providing a `application-local.yml` properties file in the `./src/main/resources/` folder, or provide one in the usual locations [Like next to the jar file when deployed].  
 
+## Configuration
 Routes are stored in a hash map [path, destination]. To add new routes, create additional properties under `gateway.routes`  
 
 Example Config - 
