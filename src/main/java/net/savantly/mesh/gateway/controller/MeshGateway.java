@@ -1,8 +1,11 @@
 package net.savantly.mesh.gateway.controller;
 
+import java.util.function.BiConsumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.mvc.ProxyExchange;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,15 @@ public class MeshGateway {
 	private static final Logger log = LoggerFactory.getLogger(MeshGateway.class);
 
 	private MeshGatewayConfig config;
+	
+	BiConsumer<String, Object> filterTranscondingHeader = new BiConsumer<String, Object>() {
+		
+		@Override
+		public void accept(String t, Object u) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 
 	public MeshGateway(MeshGatewayConfig config) {
 		this.config = config;
@@ -30,7 +42,17 @@ public class MeshGateway {
 	@GetMapping("/{child}/**")
 	public ResponseEntity<?> get(@PathVariable String child, ProxyExchange<byte[]> proxy) throws Exception {
 		log.debug("doing GET: {}", proxy.path());
-		return proxy.uri(getDestinationPath(child, proxy)).get();
+		final HttpHeaders headers = new HttpHeaders();
+
+		ResponseEntity<Object> response = proxy.uri(getDestinationPath(child, proxy))
+				.get(r -> ResponseEntity.status(r.getStatusCode())
+				.body(r.getBody()));
+		response.getHeaders().forEach((h, l) -> {
+			if (h.toUpperCase() != "TRANSFER-ENCODING") {
+				headers.addAll(h, l);
+			}
+		});
+		return response;
 	}
 	
 	@PostMapping("/{child}/**")
