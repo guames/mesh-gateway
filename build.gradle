@@ -25,6 +25,9 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+      url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
 }
 
 dependencyManagement {
@@ -37,6 +40,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	//implementation 'com.okta.spring:okta-spring-boot-starter:1.2.1'
 	implementation 'org.springframework.cloud:spring-cloud-gateway-mvc'
+	compile 'net.savantly:gateway-spring-boot-starter:0.0.1-SNAPSHOT'
 	compile group: 'com.graphql-java-kickstart', name: 'playground-spring-boot-starter', version: '5.10.0'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
