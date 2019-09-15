@@ -1,3 +1,6 @@
+mesh:
+  web:
+    cors-allowed: "*"
 gateway:
   routes:
     mesh: https://demo.getmesh.io:443
@@ -6,9 +9,15 @@ logging:
     net:
       savantly: DEBUG
     web: DEBUG
+    org.springframework.boot.autoconfigure: INFO
 graphql.playground:
     mapping: /playground
     endpoint: /gateway/mesh/api/v2/demo/graphql
     subscriptionsEndpoint: /gateway/mesh/api/v2/eventbus
     enabled: true
     pageTitle: Gentics Mesh GraphQL Playground
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings
